@@ -2,16 +2,13 @@ import os
 from pathlib import Path
 from datetime import timedelta
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-p(4m@=u9zcp^7y-+jg%k560z2on(%y4l+38pt&$%udo21qq7*='
+
 DEBUG = True
 
-ALLOWED_HOSTS = ['*'] # crm.domain.com
-
-
-# Application definition
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -25,13 +22,13 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
     'channels',
-    'users', # we created this app for registration, login, jwt auth
-    'leads', # CRUD, notes, dashboard
-    'chat',  #conversations, messages, websocket consumer
+    'users',
+    'leads',
+    'chat',
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.Corsmiddleware', #security guard
+    'corsheaders.middleware.CorsMiddleware',  # ✅ fixed capitalisation
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -58,17 +55,13 @@ TEMPLATES = [
     },
 ]
 
-#WSGI_APPLICATION = 'crm_backend.wsgi.application' Not requied
 ASGI_APPLICATION = 'crm_backend.asgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crm_database',
-        'USER' : 'root',
+        'USER': 'root',
         'PASSWORD': 'password123',
         'HOST': 'localhost',
         'PORT': '3306',
@@ -76,79 +69,56 @@ DATABASES = {
 }
 
 AUTH_USER_MODEL = 'users.User'
-# Password validation
-# https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/6.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173/',
+    'http://localhost:5173',      # ✅ removed trailing slash
     'http://127.0.0.1:5173',
 ]
-
-CORS_ALLOWED_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True    # ✅ fixed setting name
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  #each registerd user has its own token, and this line of code tells DRF to verify with it. sp, with jwtauth helps to read authorization bearer.
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthnticated', # this gives permission what they are allowed to do
+        'rest_framework.permissions.IsAuthenticated',      # ✅ fixed typo
     ),
-    'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PagenNumberPagination', #20 leads per page 
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # ✅ fixed typo
     'PAGE_SIZE': 20,
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME' : timedelta(minutes=60), #short enough that a stolen token expires quickly
-    'REFRESH_TOKEN_LIFETIME' : timedelta(days=7), #long enough that users dont get logged out constantly
-    'ROTATE_REFRESH_TOKENS' : True, #Each refresh issues a brand new refresh token- old token is one time use only 
-    'BACKLIST_AFTER_ROTATION' : True, #Invalidates used refreshed tokens- prevents token reuse attacks
-    'ALGORITHM' : 'HS256', # HMAC-SHA256-fast, secure, industry-standard signing algorithm
-    'USER_ID_FEILD': 'id', # which field on your User model is the unigue id
-    'USER_ID_CLAIM':'user_id', # the key name inside the jwt payload that holds the userid
-    'AUTH_HEADER_TYPES':('Bearer',), # React sends Authorization:bearer.... this tells DRF to look for the prefix
+    'ACCESS_TOKEN_LIFETIME':  timedelta(minutes=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS':  True,
+    'BLACKLIST_AFTER_ROTATION': True,   # ✅ fixed typo
+    'ALGORITHM': 'HS256',
+    'USER_ID_FIELD': 'id',              # ✅ fixed typo
+    'USER_ID_CLAIM': 'user_id',
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND' : 'channels_redis.core.RedisChannelLayer',
-        'CONFIG' : {
-            'hosts' : ['redis-cli --tls -u redis://default:gQAAAAAAAVAKAAIncDFkMjE0YjYyZjEyOWI0NDg4OTQ0ZmZhOWM1NWQyNzJlMHAxODYwMjY@rested-pangolin-86026.upstash.io:6379']
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': ['redis://default:gQAAAAAAAVAKAAIncDFkMjE0YjYyZjEyOWI0NDg4OTQ0ZmZhOWM1NWQyNzJlMHAxODYwMjY@rested-pangolin-86026.upstash.io:6379'],  # ✅ removed redis-cli command
         },
     },
-
 }
 
-DEFAULT_AUTO_FEILD = 'django.db.models.BigAutoFeild'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'  # ✅ fixed typo
