@@ -5,7 +5,7 @@ from datetime import timedelta
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+SECRET_KEY = 'django-insecure-p(4m@=u9zcp^7y-+jg%k560z2on(%y4l+38pt&$%udo21qq7*='
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
@@ -129,7 +129,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',  #each registerd user has its own token, and this line of code tells DRF to verify with it. sp, with jwtauth helps to read authorization bearer.
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthnticated', # this givs permission what they are allowed to do
+        'rest_framework.permissions.IsAuthnticated', # this gives permission what they are allowed to do
     ),
     'DEFAULT_PAGINATION_CLASS':'rest_framework.pagination.PagenNumberPagination', #20 leads per page 
     'PAGE_SIZE': 20,
