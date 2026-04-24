@@ -1,3 +1,4 @@
+#model is a database we create 
 import uuid 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
