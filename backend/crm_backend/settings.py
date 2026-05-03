@@ -13,13 +13,9 @@ SECRET_KEY = os.environ.get(
     "django-insecure-p(4m@=u9zcp^7y-+jg%k560z2on(%y4l+38pt&$%udo21qq7*=",
 )
 
-DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
+DEBUG = True
 
-allowed_hosts_env = os.environ.get("ALLOWED_HOSTS")
-if allowed_hosts_env:
-    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(",") if host.strip()]
-else:
-    ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     "daphne",
@@ -40,9 +36,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -101,14 +97,10 @@ USE_TZ = True
 STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-cors_origins_env = os.environ.get("CORS_ALLOWED_ORIGINS")
-if cors_origins_env:
-    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip()]
-else:
-    CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ORIGINS = [
         "http://localhost:5173",
-        "http://127.0.0.1:5173",
-    ]
+        "http://127.0.0.1:5173",]
+
 
 CORS_ALLOW_CREDENTIALS = True
 

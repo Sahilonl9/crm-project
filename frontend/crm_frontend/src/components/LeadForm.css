@@ -1,0 +1,42 @@
+.lead-form {
+  display: grid;
+  gap: 18px;
+}
+
+.lead-form-title {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.lead-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.lead-form-full {
+  grid-column: 1 / -1;
+}
+
+.lead-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .lead-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lead-form-full {
+    grid-column: auto;
+  }
+
+  .lead-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+}

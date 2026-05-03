@@ -1,0 +1,98 @@
+.lead-card {
+  padding: 18px;
+  border-radius: 16px;
+  background: white;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 14px;
+}
+
+.lead-card-header,
+.lead-card-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.lead-card-identity {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  min-width: 0;
+}
+
+.lead-card-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent-dark);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.lead-card-name {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.lead-card-company {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.lead-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.lead-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.lead-card-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lead-card-value {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.lead-card-followup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.lead-card-followup--overdue {
+  color: var(--red);
+  font-weight: 700;
+}
+
+.lead-card-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
